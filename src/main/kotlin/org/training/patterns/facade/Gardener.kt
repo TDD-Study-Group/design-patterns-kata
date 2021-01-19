@@ -1,18 +1,29 @@
 package org.training.patterns.facade
 
-open class TendBushes {
+class TendBushes {
     private val bushes = Bushes()
-    protected fun pruned() = bushes.pruned()
+    fun pruned() = bushes.pruned()
 }
 
-class Gardener : TendBushes() {
-
+class TendRoses {
     private val roses = Roses()
+    fun watered() = roses.watered()
+}
+
+class TendWeeds {
     private val weeds = Weeds()
+    fun pulledUp() = weeds.pulledUp()
+}
+
+class Gardener {
+
+    private val roses = TendRoses()
+    private val bushes = TendBushes()
+    private val weeds = TendWeeds()
 
     fun tendToGarden(): List<GardenEvent> {
         val events = ArrayList<GardenEvent>()
-        events.add(pruned())
+        events.add(bushes.pruned())
         events.add(roses.watered())
         events.add(weeds.pulledUp())
         return events
